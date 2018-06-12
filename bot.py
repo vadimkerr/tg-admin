@@ -29,7 +29,7 @@ def name(bot, update):
     keyboard = [
         [KeyboardButton('Отправить мой номер телефона', request_contact=True)]
     ]
-    reply_markup = ReplyKeyboardMarkup(keyboard=keyboard)
+    reply_markup = ReplyKeyboardMarkup(keyboard=keyboard, one_time_keyboard=True)
     update.message.reply_text(text.ASK_PHONE, reply_markup=reply_markup)
 
     return NUMBER
