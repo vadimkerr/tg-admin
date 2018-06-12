@@ -1,6 +1,7 @@
 import text
 import config
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,\
+    ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackQueryHandler
 import logging
 
@@ -29,7 +30,7 @@ def name(bot, update):
     keyboard = [
         [KeyboardButton('Отправить мой номер телефона', request_contact=True)]
     ]
-    reply_markup = ReplyKeyboardMarkup(keyboard=keyboard, one_time_keyboard=True)
+    reply_markup = ReplyKeyboardMarkup(keyboard=keyboard, one_time_keyboard=True, resize_keyboard=True)
     update.message.reply_text(text.ASK_PHONE, reply_markup=reply_markup)
 
     return NUMBER
@@ -40,7 +41,7 @@ def number_text(bot, update):
     users[update.message.chat_id]['number'] = number
 
     logger.info('Number: %s' % number)
-    update.message.reply_text(text.REQUEST_ACCEPTED)
+    update.message.reply_text(text.REQUEST_ACCEPTED, reply_markup=ReplyKeyboardRemove())
 
     request(bot, update.message.chat_id)
 
